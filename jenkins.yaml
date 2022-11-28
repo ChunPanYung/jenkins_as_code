@@ -1,4 +1,5 @@
 ---
+# Default location: $JENKINS_HOME/jenkins.yaml
 jenkins:
   securityRealm:
     local:
