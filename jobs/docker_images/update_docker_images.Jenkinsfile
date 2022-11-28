@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Update all docker images...') {
+            steps {
+                sh './docker_images/upgrade_all_images.sh'
+            }
+        } // End stage
+        stage('Prune all unused docker images...') {
+            steps {
+                sh '''#!/bin/bash
+                    docker image prune --force
+                '''
+            }
+        } // End stage
+    } // End stages
+    post {
+        always {
+            echo 'List all docker images...'
+            sh 'docker images'
+        }
+    }
+}
