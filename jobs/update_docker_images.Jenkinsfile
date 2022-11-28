@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {}
-
-    parameters {}
-
     stages {
         stage('Update all docker images...') {
             steps {
