@@ -5,8 +5,11 @@ pipeline {
         stage('Update all docker images...') {
             steps {
                 sh '''#!/bin/bash
-                    images=$(docker images --format "{{.Repository}}:{{.Tag}}")
-                    images=$($images | grep --invert-match --extended-regexp '<none>|local')
+                    echo 'current pwd'
+                    pwd
+
+                    images=$(docker images --format "{{.Repository}}:{{.Tag}} | 
+                             grep --invert-match --extended-regexp '<none>|local')
 
                     for image in $images
                     do
