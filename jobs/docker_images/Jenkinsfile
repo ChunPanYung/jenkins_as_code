@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Update all docker images...') {
             steps {
-                sh './docker_images/upgrade_all_images.sh'
+                sh './jobs/docker_images/upgrade_all_images.sh'
             }
         } // End stage
         stage('Prune all unused docker images...') {
