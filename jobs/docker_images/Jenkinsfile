@@ -5,6 +5,16 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            checkout([
+                $class: 'GitSCM', branches: [[name: '**']],
+                extensions: [[$class: 'SparseCheckoutPaths',
+                sparseCheckoutPaths: [[path: 'jobs/docker_images']]],
+                [$class: 'CloneOption', depth: 1, noTags: false, reference: '',
+                 shallow: true]],
+                userRemoteConfigs: [[url: 'https://github.com/ChunPanYung/jenkins_as_code']]
+            ])
+        }
         stage('Debug') {
             when {
                 anyOf { branch 'dev' }
