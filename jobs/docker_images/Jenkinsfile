@@ -1,7 +1,11 @@
 pipeline {
     agent any
     options {
-        skipDefaultCheckout(true) // Manual checkout stage
+        skipDefaultCheckout() // Manual checkout stage
+    }
+
+    parameters {
+        choice(name: 'ACTION', choices: ['update_all_images', 'build_image'])
     }
 
     stages {
