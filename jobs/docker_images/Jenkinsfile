@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        checkoutToSubdirectory('job/docker_images/')
+    }
 
     stages {
         stage('Update all docker images...') {
