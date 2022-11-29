@@ -1,12 +1,13 @@
 pipeline {
     agent any
     options {
-        checkoutToSubdirectory('jobs/docker_images/')
+        skipDefaultCheckout(true) // Required for clean before checkout
     }
 
     stages {
         stage('Checkout') {
             steps {
+                cleanWs()
                 checkout([
                     $class: 'GitSCM', branches: [[name: '**']],
                     extensions: [
