@@ -24,7 +24,7 @@ pipeline {
                 anyOf { branch 'dev' }
             }
             steps {
-                sh 'ls'
+                sh 'tree'
             }
         } // End stage
         stage('Update all docker images...') {
