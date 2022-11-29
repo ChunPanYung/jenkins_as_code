@@ -5,6 +5,14 @@ pipeline {
     }
 
     stages {
+        stage('Debug') {
+            when {
+                anyOf { branch 'dev' }
+            }
+            steps {
+                sh 'ls'
+            }
+        } // End stage
         stage('Update all docker images...') {
             steps {
                 sh './jobs/docker_images/upgrade_all_images.sh'
