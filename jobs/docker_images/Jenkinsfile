@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        checkoutToSubdirectory('job/docker_images/')
+        checkoutToSubdirectory('jobs/docker_images/')
     }
 
     stages {
