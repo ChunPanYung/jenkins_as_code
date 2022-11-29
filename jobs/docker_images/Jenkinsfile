@@ -1,7 +1,7 @@
 pipeline {
     agent any
     options {
-        skipDefaultCheckout(true) // Required for clean before checkout
+        skipDefaultCheckout(true) // Manual checkout stage
     }
 
     stages {
@@ -21,14 +21,6 @@ pipeline {
                 ])
             }
         } // End stage Checkout
-        stage('Debug') {
-            when {
-                anyOf { branch 'dev' }
-            }
-            steps {
-                sh 'tree'
-            }
-        } // End stage
         stage('Update all docker images...') {
             steps {
                 sh './jobs/docker_images/upgrade_all_images.sh'
@@ -42,6 +34,7 @@ pipeline {
             }
         } // End stage
     } // End stages
+
     post {
         always {
             echo 'List all docker images...'
