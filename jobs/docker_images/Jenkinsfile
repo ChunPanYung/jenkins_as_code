@@ -7,19 +7,20 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                cleanWs()
                 checkout([
                     $class: 'GitSCM', branches: [[name: '**']],
                     extensions: [
                         [$class: 'SparseCheckoutPaths',
                          sparseCheckoutPaths: [[path: 'jobs/docker_images']]],
-                        [$class: 'CloneOption', depth: 1, noTags: false, reference: '',
-                         shallow: true]
+                        [$class: 'CloneOption', depth: 1, noTags: false,
+                         reference: '', shallow: true]
                     ],
-                    userRemoteConfigs: [[url: 'https://github.com/ChunPanYung/jenkins_as_code']]
+                    userRemoteConfigs: [
+                        [url: 'https://github.com/ChunPanYung/jenkins_as_code']
+                    ]
                 ])
             }
-        }
+        } // End stage Checkout
         stage('Debug') {
             when {
                 anyOf { branch 'dev' }
@@ -45,6 +46,10 @@ pipeline {
         always {
             echo 'List all docker images...'
             sh 'docker images'
+        }
+        failure {
+            echo 'Job failed!'
+            cleanWs()
         }
     }
 }
