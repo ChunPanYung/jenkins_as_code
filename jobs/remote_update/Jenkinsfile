@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     def remote = [:]
-                    remote.name: 'server'
+                    remote.name = 'server'
                     remote.host = 'cloud.lan'
                     remote.allowAnyHosts = true
 
