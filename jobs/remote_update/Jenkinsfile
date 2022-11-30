@@ -31,7 +31,7 @@ pipeline {
                     remote.host = 'cloud.lan'
                     remote.allowAnyHosts = true
 
-                    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
                         remote.user = userName
                         remote.identityFile = identity
 
