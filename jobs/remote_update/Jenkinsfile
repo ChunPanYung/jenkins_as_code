@@ -1,4 +1,4 @@
-def remote = [name = 'sshConnection', host: 'cloud.lan', user: 'server', 
+def remote = [name: 'sshConnection', host: 'cloud.lan', user: 'server',
               allowAnyHosts: true]
 
 pipeline {
