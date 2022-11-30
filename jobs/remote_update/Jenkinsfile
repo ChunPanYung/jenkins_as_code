@@ -1,6 +1,11 @@
 def remote = [:]
-remote.name = 'server'
-remote.host = 'cloud.lan'
+withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
+                 keyFileVariable: 'sshKeyFile')]) {
+    remote.name = 'server'
+    remote.host = 'cloud.lan'
+    remote.user = 'server'
+    remote.identityFile = sshKeyFile
+}
 
 pipeline {
     agent any
@@ -28,13 +33,7 @@ pipeline {
 
         stage('Remote SSH') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
-                                 keyFileVariable: 'sshKeyFile')]) {
-                    remote.user = 'server'
-                    remote.identityFile = sshKeyFile
-
-                    sshCommand remote: remote, command: 'ls'
-                }
+                sshCommand remote: remote, command: 'ls'
 
             }
         } // End stage Remote SSH
