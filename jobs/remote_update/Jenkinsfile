@@ -25,16 +25,19 @@ pipeline {
         } // End stage('Checkout')
 
         stage('Remote SSH') {
-            environment {
-                SSH_KEY = credentials('server_ssh')
-            }
             steps {
                 script {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
+                        keyFileVariable: 'identity', usernameVariable: 'userName')]) {
+
+                        remote.user = userName
+                        remote.identityFile = identity
+                        stage("SSH Steps Rocks!") {
+                            sshCommand remote: remote, command: 'ls'
+                        }
+                    }
                     remote.user = $SSH_KEY_USR
-                }
-                sh "echo SSH private key is ${SSH_KEY}"
-                sh "echo user name: ${SSH_KEY_USR}"
-                // remote.identityFile = $SSH_KEY_PSW
+                } // End script {}
                 // sshCommand remote: remote, command: 'ls'
             }
         } // End stage Remote SSH
