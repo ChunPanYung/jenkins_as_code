@@ -40,7 +40,6 @@ pipeline {
                             sshCommand remote: remote, command: 'ls'
                         }
                     }
-                    remote.user = $SSH_KEY_USR
                 } // End script {}
                 // sshCommand remote: remote, command: 'ls'
             }
