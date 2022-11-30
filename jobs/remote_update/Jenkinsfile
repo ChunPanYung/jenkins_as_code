@@ -29,8 +29,8 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
                     keyFileVariable: 'sshKeyFile')]) {
                         script {
-                            remote.user = $server_ssh
-                            remote.identityFile = $sshKeyFile
+                            remote.user = "$server_ssh"
+                            remote.identityFile = "$sshKeyFile"
                             sshCommand remote: remote, command: 'ls'
                         }
                 }
