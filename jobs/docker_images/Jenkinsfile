@@ -5,8 +5,8 @@ pipeline {
         skipDefaultCheckout() // Manual checkout stage
     }
     parameters {
-        choice(name: 'CHOICE', choices: ['update_all_images', 'build_images'],
-            description: 'Pick something')
+        choice(name: 'ACTION', choices: ['update_all_images', 'build_images'])
+
     }
 
     stages {
