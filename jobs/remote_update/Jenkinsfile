@@ -34,8 +34,8 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: 'server',
                         passwordVariable: 'userPass', usernameVariable: 'userName')]) {
 
-                        remote.user = $userName
-                        remote.password = $userPass
+                        remote.user = userName
+                        remote.password = userPass
                         stage("SSH Steps Rocks!") {
                             sshCommand remote: remote, command: 'ls'
                         }
