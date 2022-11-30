@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh "echo SSH private key is ${SSH_KEY}"
                 sh "echo user name: ${SSH_KEY_USR}"
-                remote.user = $SSH_KEY_USR
+                remote.user = "$SSH_KEY_USR"
                 // remote.identityFile = $SSH_KEY_PSW
                 // sshCommand remote: remote, command: 'ls'
             }
