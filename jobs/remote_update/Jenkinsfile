@@ -31,11 +31,11 @@ pipeline {
                     remote.host = 'cloud.lan'
                     remote.allowAnyHosts = true
 
-                    withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
-                        keyFileVariable: 'identity', usernameVariable: 'userName')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'server',
+                        passwordVariable: 'userPass', usernameVariable: 'userName')]) {
 
-                        remote.user = userName
-                        remote.identityFile = identity
+                        remote.user = $userName
+                        remote.password = $userPass
                         stage("SSH Steps Rocks!") {
                             sshCommand remote: remote, command: 'ls'
                         }
