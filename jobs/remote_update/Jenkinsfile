@@ -5,15 +5,6 @@ pipeline {
     options {
         skipDefaultCheckout() // Manual checkout stage
     }
-    environment {
-        withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
-            keyFileVariable: 'sshKeyFile')]) {
-                script { 
-                    remote.identityFile = sshKeyFile 
-                }
-        }
-        sshCred = credentials('server_ssh')
-    }
 
     stages {
         stage('Checkout') {
@@ -35,10 +26,14 @@ pipeline {
 
         stage('Remote SSH') {
             steps {
-
-                remote.user = $sshCred_USR
-                sshCommand remote: remote, command: 'ls'
-
+                withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
+                    keyFileVariable: 'sshKeyFile')]) {
+                        script {
+                            remote.user = server_ssh
+                            remote.identityFile = sshKeyFile
+                            sshCommand remote: remote, command: 'ls'
+                        }
+                }
             }
         } // End stage Remote SSH
     } // End stages
