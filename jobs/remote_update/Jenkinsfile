@@ -1,5 +1,4 @@
 
-def remote = [name: 'sshConnection', host: 'cloud.lan', allowAnyHosts: true]
 pipeline {
     agent any
     options {
@@ -27,6 +26,11 @@ pipeline {
         stage('Remote SSH') {
             steps {
                 script {
+                    def remote = [:]
+                    remote.name: 'server'
+                    remote.host = 'cloud.lan'
+                    remote.allowAnyHosts = true
+
                     withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
                         keyFileVariable: 'identity', usernameVariable: 'userName')]) {
 
