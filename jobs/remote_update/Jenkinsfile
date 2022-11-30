@@ -8,7 +8,9 @@ pipeline {
     environment {
         withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
             keyFileVariable: 'sshKeyFile')]) {
-                script { remote.identityFile = sshKeyFile }
+                script { 
+                    remote.identityFile = sshKeyFile 
+                }
         }
         sshCred = credentials('server_ssh')
     }
