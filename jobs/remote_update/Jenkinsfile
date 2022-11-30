@@ -31,11 +31,10 @@ pipeline {
                     remote.host = 'cloud.lan'
                     remote.allowAnyHosts = true
 
-                    withCredentials([sshUserPrivateKey(credentialsId: 'server',
-                        passwordVariable: 'userPass', usernameVariable: 'userName')]) {
-
+                    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
                         remote.user = userName
-                        remote.password = userPass
+                        remote.identityFile = identity
+
                         stage("SSH Steps Rocks!") {
                             sshCommand remote: remote, command: 'ls'
                         }
