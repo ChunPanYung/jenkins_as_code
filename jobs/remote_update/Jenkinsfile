@@ -1,14 +1,16 @@
 def remote = [name: 'sshConnection', host: 'cloud.lan', user: 'server',
-              allowAnyHosts: true]
-withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
-                 keyFileVariable: 'sshKeyFile')]) {
-    remote.identityFile = sshKeyFile
-}
+    allowAnyHosts: true]
 
 pipeline {
     agent any
     options {
         skipDefaultCheckout() // Manual checkout stage
+    }
+    environment {
+        withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
+            keyFileVariable: 'sshKeyFile')]) {
+            remote.identityFile = sshKeyFile
+        }
     }
 
     stages {
