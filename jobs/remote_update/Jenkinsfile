@@ -27,11 +27,11 @@ pipeline {
         stage('Remote SSH') {
             environment {
                 SSH_KEY = credentials('server_ssh')
+            }
+            steps {
                 script {
                     remote.user = $SSH_KEY_USR
                 }
-            }
-            steps {
                 sh "echo SSH private key is ${SSH_KEY}"
                 sh "echo user name: ${SSH_KEY_USR}"
                 // remote.identityFile = $SSH_KEY_PSW
