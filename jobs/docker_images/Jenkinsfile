@@ -25,12 +25,12 @@ pipeline {
                 ])
             }
         } // End stage Checkout
-        stage('Update all docker images...') {
+        stage('Update all images...') {
             steps {
                 sh './jobs/docker_images/upgrade_all_images.sh'
             }
         } // End stage
-        stage('Prune all unused docker images...') {
+        stage('Prune unused images...') {
             steps {
                 sh '''#!/bin/bash
                     docker image prune --force

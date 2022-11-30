@@ -1,0 +1,42 @@
+def remote = [:]
+remote.name = 'server'
+remote.host = 'cloud.lan'
+
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout() // Manual checkout stage
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM', branches: [[name: '**']],
+                    extensions: [
+                        [$class: 'SparseCheckoutPaths',
+                         sparseCheckoutPaths: [[path: 'jobs/remote_update']]],
+                        [$class: 'CloneOption', depth: 1, noTags: false,
+                         reference: '', shallow: true]
+                    ],
+                    userRemoteConfigs: [
+                        [url: 'https://github.com/ChunPanYung/jenkins_as_code']
+                    ]
+                ])
+            }
+        } // End stage Checkout
+
+        stage('Remote SSH') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh',
+                                 keyFileVariable: 'sshKeyFile')]) {
+                    remote.user = 'server'
+                    remote.identityFile = sshKeyFile
+
+                    sshCommand remote: remote, command: 'ls'
+                }
+
+            }
+        } // End stage Remote SSH
+    } // End stages
+}
