@@ -29,9 +29,10 @@ pipeline {
                 SSH_KEY = credentials('server_ssh')
             }
             steps {
-                remote.user = $SSH_KEY_USR
-                remote.identityFile = $SSH_KEY_PSW
-                sshCommand remote: remote, command: 'ls'
+                sh 'echo SSH private key is ${SSH_KEY}'
+                // remote.user = $SSH_KEY_USR
+                // remote.identityFile = $SSH_KEY_PSW
+                // sshCommand remote: remote, command: 'ls'
             }
         } // End stage Remote SSH
     } // End stages
