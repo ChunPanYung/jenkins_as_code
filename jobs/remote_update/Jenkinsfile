@@ -28,15 +28,17 @@ pipeline {
                 SSH_KEY = credentials('ssh-server')
             }
             steps {
-                def remote = [:]
-                remote.name = 'server'
-                remote.host = 'cloud.lan'
-                remote.allowAnyHosts = true
+                script{ 
+                    def remote = [:]
+                    remote.name = 'server'
+                    remote.host = 'cloud.lan'
+                    remote.allowAnyHosts = true
 
-                remote.user = SSH_KEY_USR
-                remote.identityFile = SSH_KEY
+                    remote.user = SSH_KEY_USR
+                    remote.identityFile = SSH_KEY
 
-                sshCommand remote: remote, command: 'ls'
+                    sshCommand remote: remote, command: 'ls'
+                }
             }
         } // End stage Remote SSH
     } // End stages
