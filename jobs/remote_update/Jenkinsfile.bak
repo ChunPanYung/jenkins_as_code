@@ -24,19 +24,23 @@ pipeline {
         } // End stage('Checkout')
 
         stage('Remote SSH') {
-            environment {
-                SSH_KEY = credentials('ssh-server')
-            }
             steps {
-                def remote = [:]
-                remote.name = 'server'
-                remote.host = 'cloud.lan'
-                remote.allowAnyHosts = true
+                script {
+                    def remote = [:]
+                    remote.name = 'server'
+                    remote.host = 'cloud.lan'
+                    remote.allowAnyHosts = true
 
-                remote.user = SSH_KEY_USR
-                remote.identityFile = SSH_KEY
+                    withCredentials([sshUserPrivateKey(credentialsId: 'server_ssh', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                        remote.user = userName
+                        remote.identityFile = identity
 
-                sshCommand remote: remote, command: 'ls'
+                        stage("SSH Steps Rocks!") {
+                            sshCommand remote: remote, command: 'ls'
+                        }
+                    }
+                } // End script {}
+                // sshCommand remote: remote, command: 'ls'
             }
         } // End stage Remote SSH
     } // End stages
