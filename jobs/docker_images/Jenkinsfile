@@ -12,17 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM', branches: [[name: '**']],
-                    extensions: [
-                        [$class: 'SparseCheckoutPaths',
-                         sparseCheckoutPaths: [[path: 'jobs/docker_images']]],
-                        [$class: 'CloneOption', shallow: true]
-                    ],
-                    userRemoteConfigs: [
-                        [url: 'https://github.com/ChunPanYung/jenkins_as_code']
-                    ]
-                ])
+                checkout scm
             }
         } // End stage Checkout
         stage('Update all images...') {
